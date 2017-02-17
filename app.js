@@ -37,8 +37,9 @@ app.post('/', function (req, res) {
 
     function jypHandler(assistant) {
         var i = parseInt(req.body.result.parameters.number);
-        console.log("============ number : " + i*i + " ========");
-        assistant.ask('I love it.');
+        // console.log("============ number : " + i*i + " ========");
+        assistant.ask("It's power is " + i*i + ".");
+        // assistant.ask('I love it.');
     }
 
     let actionMap = new Map();
