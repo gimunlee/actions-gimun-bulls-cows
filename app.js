@@ -34,12 +34,19 @@ app.post('/', function (req, res) {
 //   }
 
     const JYP_INTENT = 'jyp-action';
+    const COMMAND_INTENT = 'command-action';
 
     function jypHandler(assistant) {
         var i = parseInt(req.body.result.parameters.number);
         // console.log("============ number : " + i*i + " ========");
         assistant.ask("It's power is " + i*i + ".");
         // assistant.ask('I love it.');
+    }
+
+    function commandHandler(assistant) {
+        var korean_part = req.body.result.command;
+        console.log(korean_part);
+        assistant.tell("Roger!");
     }
 
     let actionMap = new Map();
