@@ -28,12 +28,22 @@ app.post('/', function (req, res) {
   console.log('Request body: ' + JSON.stringify(req.body));
 
   // Fulfill action business logic
-  function responseHandler (assistant) {
-    // Complete your fulfillment logic and send a response
-    assistant.tell('Hello, World!');
-  }
+//   function responseHandler (assistant) {
+//     // Complete your fulfillment logic and send a response
+//     assistant.tell('Hello, World!');
+//   }
 
-  assistant.handleRequest(responseHandler);
+    const JYP_INTENT = 'jyp-action';
+
+    function jypHandler(assistant) {
+        assistant.ask('I love it.');
+    }
+
+    let actionMap = new Map();
+    actionMap.set(JYP_INTENT, jypHandler);
+
+//   assistant.handleRequest(responseHandler); with single handler only.
+    assistant.handleRequest(actionMap);
 });
 // [END YourAction]
 
