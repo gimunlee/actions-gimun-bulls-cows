@@ -47,6 +47,11 @@ app.post('/', function (req, res) {
 });
 // [END YourAction]
 
+app.get("/", function(req, res) {
+    res.send("Hello");
+    console.log("Request for /");
+})
+
 if (module === require.main) {
   // [START server]
   // Start the server
