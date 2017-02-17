@@ -36,7 +36,8 @@ app.post('/', function (req, res) {
     const JYP_INTENT = 'jyp-action';
 
     function jypHandler(assistant) {
-        console.log("============ number : " + req.body.result.parameters.number + " ========");
+        var i = parseInt(req.body.result.parameters.number);
+        console.log("============ number : " + i*i + " ========");
         assistant.ask('I love it.');
     }
 
