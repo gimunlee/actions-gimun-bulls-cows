@@ -51,6 +51,7 @@ app.post('/', function (req, res) {
 
     let actionMap = new Map();
     actionMap.set(JYP_INTENT, jypHandler);
+    actionMap.set(COMMAND_INTENT, commandHandler);
 
 //   assistant.handleRequest(responseHandler); with single handler only.
     assistant.handleRequest(actionMap);
