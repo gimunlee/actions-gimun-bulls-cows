@@ -14,6 +14,7 @@
 'use strict';
 
 process.env.DEBUG = 'actions-on-google:*';
+process.env.GSShopServerHost = ""
 let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
 let bodyParser = require('body-parser');
@@ -27,11 +28,13 @@ app.post('/', function (req, res) {
   console.log('Request headers: ' + JSON.stringify(req.headers));
   console.log('Request body: ' + JSON.stringify(req.body));
 
-  // Fulfill action business logic
+// Fulfill action business logic
 //   function responseHandler (assistant) {
-//     // Complete your fulfillment logic and send a response
-//     assistant.tell('Hello, World!');
-//   }
+//      // Complete your fulfillment logic and send a response
+//      assistant.tell('Hello, World!');
+//  }
+//
+//  actionMap.set(RESPONSE, responseHandler);
 
     const JYP_INTENT = 'jyp-action';
     const COMMAND_INTENT = 'command-action';
@@ -46,14 +49,39 @@ app.post('/', function (req, res) {
     function commandHandler(assistant) {
         var korean_part = req.body.result.command;
         console.log(korean_part);
-        assistant.tell("Roger!");
+        assistant.tell("알겠습니다, 기문님!");
+    }
+
+    function liveHandler(assistant) {
+        request.get({ "url":"https://" + process.env.GSShopServerHost + "/live","body":"{}"},
+            function(error,response,body) {
+                var speech = "";
+                var prompt = "";
+                
+                var deliveries = JSON.parse(body);
+                
+                speech += " There are " + deliveries.length + " deliveries ongoing. ";
+                
+                speech += " They are now at ";
+                for(var delivery of deliveries) {
+                    speech += " " + delivery.currentLocation + ", ";
+                }
+                
+                // prompt = " If you want to know about detail, please tell me the name, current location, or the category of the product.";
+                prompt = " If you want to know about the detail, please tell me the index of the product";
+                
+                alexaHandler.emit(':ask',speech + prompt, prompt);
+            });
     }
 
     let actionMap = new Map();
     actionMap.set(JYP_INTENT, jypHandler);
     actionMap.set(COMMAND_INTENT, commandHandler);
 
-//   assistant.handleRequest(responseHandler); with single handler only.
+    
+
+//   // with single handler only.
+//   assistant.handleRequest(responseHandler); 
     assistant.handleRequest(actionMap);
 });
 // [END YourAction]
@@ -66,7 +94,7 @@ app.get("/", function(req, res) {
 if (module === require.main) {
   // [START server]
   // Start the server
-  let server = app.listen(process.env.PORT || 8080, function () {
+  let server = app.listen(process.env.PORT || 8080, function () {   
     let port = server.address().port;
     console.log('App listening on port %s', port);
   });
