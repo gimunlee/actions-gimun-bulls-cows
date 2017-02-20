@@ -30,6 +30,9 @@ app.post('/', function (req, res) {
   console.log('Request headers: ' + JSON.stringify(req.headers));
   console.log('Request body: ' + JSON.stringify(req.body));
 
+  if(req.body.originalRequest.source == "google")
+    console.log("======= This is from Google");
+
 // Fulfill action business logic
 //   function responseHandler (assistant) {
 //      // Complete your fulfillment logic and send a response
