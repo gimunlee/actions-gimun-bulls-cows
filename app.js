@@ -49,7 +49,7 @@ app.post('/', function (req, res) {
     function commandHandler(assistant) {
         var korean_part = req.body.result.command;
         console.log(korean_part);
-        assistant.tell("알겠습니다, 기문님!");
+        assistant.tell("알겠습니다, 기문님! " + korean_part + "");
     }
 
     function liveHandler(assistant) {
