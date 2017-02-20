@@ -64,9 +64,9 @@ app.post('/', function (req, res) {
                 console.log(JSON.parse(body)['message']);
                 console.log({'message':'test'}.message);
                 speech += "You received " + JSON.parse(body)['message'];
-                var prompt = "Is there any thing you need more?";
+                var prompt = ". Is there any thing you need more?";
                 
-                assistant.ask(speech + prompt, prompt);
+                assistant.ask(speech + prompt);
             });
     }
 
