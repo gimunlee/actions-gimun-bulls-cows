@@ -57,6 +57,7 @@ app.post('/', function (req, res) {
     function testHandler(assistant) {
         request.get({ "url":"http://" + process.env.GSShopServerHost + "/test","body":"{}"},
             function(error,response,body) {
+                console.log(JSON.stringify(response));
                 var speech = "";
                 speech += "You received " + JSON.parse(body).koreanMessage;
                 var prompt = "Is there any thing you need more?";
