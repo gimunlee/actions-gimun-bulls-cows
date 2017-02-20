@@ -37,8 +37,6 @@ app.post('/', function (req, res) {
 //  actionMap.set(RESPONSE, responseHandler);
 
     const JYP_INTENT = 'jyp-action';
-    const COMMAND_INTENT = 'command-action';
-
     function jypHandler(assistant) {
         var i = parseInt(req.body.result.parameters.number);
         // console.log("============ number : " + i*i + " ========");
@@ -46,12 +44,14 @@ app.post('/', function (req, res) {
         // assistant.ask('I love it.');
     }
 
+    const COMMAND_INTENT = 'command-action';
     function commandHandler(assistant) {
         var korean_part = req.body.result.parameters.command;
         console.log(korean_part);
         assistant.tell("알겠습니다, 기문님! " + korean_part + "");
     }
 
+    const TEST_INTENT = 'test-action';
     function testHandler(assistant) {
         request.get({ "url":"http://" + process.env.GSShopServerHost + "/test","body":"{}"},
             function(error,response,body) {
@@ -66,6 +66,7 @@ app.post('/', function (req, res) {
     let actionMap = new Map();
     actionMap.set(JYP_INTENT, jypHandler);
     actionMap.set(COMMAND_INTENT, commandHandler);
+    actionMap.set(TEST_INTENT, testHandler);
 
     
 
