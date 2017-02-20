@@ -61,7 +61,7 @@ app.post('/', function (req, res) {
                 speech += "You received " + JSON.parse(body).koreanMessage;
                 var prompt = "Is there any thing you need more?";
                 
-                alexaHandler.emit(':ask',speech + prompt, prompt);
+                assistant.ask(speech + prompt, prompt);
             });
     }
 
