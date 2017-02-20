@@ -59,6 +59,7 @@ app.post('/', function (req, res) {
             function(error,response,body) {
                 console.log(JSON.stringify(response));
                 var speech = "";
+                console.log(body);
                 speech += "You received " + JSON.parse(body).koreanMessage;
                 var prompt = "Is there any thing you need more?";
                 
