@@ -14,7 +14,7 @@
 'use strict';
 
 process.env.DEBUG = 'actions-on-google:*';
-process.env.GSShopServerHost = ""
+process.env.GSShopServerHost = "ec2-54-196-242-126.compute-1.amazonaws.com:8080"
 let Assistant = require('actions-on-google').ApiAiAssistant;
 let express = require('express');
 let bodyParser = require('body-parser');
@@ -52,23 +52,12 @@ app.post('/', function (req, res) {
         assistant.tell("알겠습니다, 기문님! " + korean_part + "");
     }
 
-    function liveHandler(assistant) {
-        request.get({ "url":"https://" + process.env.GSShopServerHost + "/live","body":"{}"},
+    function testHandler(assistant) {
+        request.get({ "url":"http://" + process.env.GSShopServerHost + "/test","body":"{}"},
             function(error,response,body) {
                 var speech = "";
-                var prompt = "";
-                
-                var deliveries = JSON.parse(body);
-                
-                speech += " There are " + deliveries.length + " deliveries ongoing. ";
-                
-                speech += " They are now at ";
-                for(var delivery of deliveries) {
-                    speech += " " + delivery.currentLocation + ", ";
-                }
-                
-                // prompt = " If you want to know about detail, please tell me the name, current location, or the category of the product.";
-                prompt = " If you want to know about the detail, please tell me the index of the product";
+                speech += "You received " + JSON.parse(body).koreanMessage;
+                var prompt = "Is there any thing you need more?";
                 
                 alexaHandler.emit(':ask',speech + prompt, prompt);
             });
