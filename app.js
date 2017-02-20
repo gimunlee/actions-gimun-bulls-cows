@@ -62,6 +62,7 @@ app.post('/', function (req, res) {
                 console.log(body);
                 console.log(JSON.parse(body));
                 console.log(JSON.parse(body)['message']);
+                console.log({'message':'test'}.message);
                 speech += "You received " + JSON.parse(body)['message'];
                 var prompt = "Is there any thing you need more?";
                 
